@@ -1,0 +1,56 @@
+<odoo>
+
+    <record id="view_sale_order_tree_inherit_booking" model="ir.ui.view">
+        <field name="name">sale.order.tree.booking.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="is_booking_order"/>
+                <field name="team_id"/>
+                <field name="team_leader_id"/>
+                <field name="booking_start"/>
+                <field name="booking_end"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_order_form_inherit_booking_order" model="ir.ui.view">
+        <field name="name">sale.order.form.booking.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <header>
+                <field name="is_booking_order" invisible="1"/>
+                <field name="team_id"/>
+                <field name="team_leader_id" readonly="1"/>
+                <field name="team_members_ids" widget="many2many_tags" readonly="1"/>
+                <field name="booking_start"/>
+                <field name="booking_end"/>
+                <button name="check_team_availability" type="object" string="Check Availability" class="btn-primary"/>
+            </header>
+
+
+            <xpath expr="//sheet/group" position="before">
+                <group string="Booking Information" attrs="{'invisible': [('is_booking_order', '=', False)]}">
+                    <field name="team_id" required="1"/>
+                    <field name="team_leader_id" readonly="1"/>
+                    <field name="team_members_ids" widget="many2many_tags" readonly="1"/>
+                    <field name="booking_start" required="1"/>
+                    <field name="booking_end" required="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="action_booking_order" model="ir.actions.act_window">
+        <field name="name">Booking Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_booking_order', '=', True)]</field>
+        <field name="context">{'default_is_booking_order': True}</field>
+    </record>
+</odoo>

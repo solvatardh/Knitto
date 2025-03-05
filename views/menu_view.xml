@@ -1,0 +1,6 @@
+<odoo>
+    <menuitem id="menu_booking_order_root" name="Booking" parent="sale.sale_order_menu"/>
+    <menuitem id="menu_service_team" name="Service Team" parent="menu_booking_order_root" action="action_service_team"/>
+    <menuitem id="menu_booking_order" name="Booking Order" parent="menu_booking_order_root" action="action_booking_order"/>
+    <menuitem id="menu_work_order" name="Work Order" parent="menu_booking_order_root" action="action_work_order"/>
+</odoo>
